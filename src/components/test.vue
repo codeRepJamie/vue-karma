@@ -2,7 +2,7 @@
   <span>
     <button ref="minus" @click="minus" :disabled="isMinusDisabled">-</button>
     <input ref="inputNumber" type="number" v-model.number="value">
-    <button ref="plus" @click="plus">+</button>
+    <button ref="plus" @click="plus" :disabled="isPlusDisabled">+</button>
   </span>
 </template>
 
@@ -39,6 +39,9 @@
     computed: {
       isMinusDisabled() {
         return this.value === this.minValue
+      },
+      isPlusDisabled() {
+        return this.value === this.maxValue
       }
     },
     methods: {
@@ -50,7 +53,7 @@
         }
       },
       plus() {
-        if (this.maxValue > 0 && this.value > this.maxValue) {
+        if (this.maxValue > 0 && this.value === this.maxValue) {
           return false;
         }
         this.value++

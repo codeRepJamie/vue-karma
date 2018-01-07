@@ -131,12 +131,12 @@ describe('test.vue组件加载加载后，', () => {
       do {
         testingComponent.$refs.plus.click()
         console.log(testingComponent.value, testingComponent.maxValue);
-      } while (testingComponent.value + 1 < maxNumber)
+      } while (testingComponent.value < maxNumber)
 
-      console.log(testingComponent.value);
-      console.log(maxNumber);
-      expect(testingComponent.value).toEqual(maxNumber)
-      expect(testingComponent.$refs.plus.disabled).toBe(true)
+      testingComponent.$nextTick(function () {
+        expect(this.value).toEqual(maxNumber)
+        expect(this.$refs.plus.disabled).toBe(true)
+      })
     })
 
   })
