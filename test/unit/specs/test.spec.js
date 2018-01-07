@@ -3,7 +3,7 @@ import test from '@/components/test'
 
 describe('test.vue组件加载加载后，', () => {
 
-  function createVue (vueConfig) {
+  function createVue(vueConfig) {
     let baseVueConfig = {
       template: `<div><test number="10"/></div>`,
       components: {test}
@@ -68,12 +68,11 @@ describe('test.vue组件加载加载后，', () => {
       let set_min = 2
       testingComponent.$refs.inputNumber.value = set_min
       testingComponent.$refs.inputNumber.dispatchEvent(new Event('input'))
-      console.log(testingComponent.value);
-      setTimeout(function () {
-        console.log(testingComponent.value);
-      },0)
-      expect(testingComponent.minValue).toBeGreaterThan(set_min)
-      expect(testingComponent.minValue).toEqual(testingComponent.value)
+
+      testingComponent.$nextTick(function () {
+        expect(testingComponent.minValue).toBeGreaterThan(set_min)
+        expect(testingComponent.minValue).toEqual(testingComponent.value)
+      })
 
     })
   })
