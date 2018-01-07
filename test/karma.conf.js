@@ -5,8 +5,6 @@ process.env.NODE_ENV = 'testing'
 const webpack = require('webpack');
 const baseWebpackConfig = require('../build/webpack.base.conf')
 
-console.log(baseWebpackConfig)
-
 module.exports = function (config) {
   config.set({
 

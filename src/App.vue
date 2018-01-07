@@ -2,6 +2,7 @@
   <div id="app">
     <img src="./assets/logo.png">
     <HelloWorld/>
+    <test number="10"></test>
   </div>
 </template>
 
@@ -9,12 +10,11 @@
 import HelloWorld from '@/components/HelloWorld'
 import test from '@/components/test'
 
-console.log(test);
-
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    HelloWorld,
+    test
   }
 }
 </script>

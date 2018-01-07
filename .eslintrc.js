@@ -19,8 +19,12 @@ module.exports = {
   rules: {
     // allow async-await
     'generator-star-spacing': 'off',
+    'spaced-comment': 'off',
     'no-unused-vars': 'warn',
     'semi': 'off',
+    'padded-blocks': 'off',
+    'space-before-function-paren': 'off',
+    'camelcase':'off',
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-multiple-empty-lines': process.env.NODE_ENV === 'production' ? 'error' : 'off'
