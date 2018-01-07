@@ -2,7 +2,7 @@
   <div id="app">
     <img src="./assets/logo.png">
     <HelloWorld/>
-    <test number="10"></test>
+    <test max="5" number="2"></test>
   </div>
 </template>
 

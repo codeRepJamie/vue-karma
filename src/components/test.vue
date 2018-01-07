@@ -1,6 +1,6 @@
 <template>
   <span>
-    <button ref="minus" @click="minus">-</button>
+    <button ref="minus" @click="minus" :disabled="isMinusDisabled">-</button>
     <input ref="inputNumber" type="number" v-model.number="value">
     <button ref="plus" @click="plus">+</button>
   </span>
@@ -12,9 +12,9 @@
 
   export default {
     name: 'test',
-    props: ['number', 'min'],
+    props: ['number', 'min', 'max'],
     watch: {
-      value (value, old_value) {
+      value(value, old_value) {
 
         value = Number(value)
         if (value <= this.minValue) {
@@ -24,25 +24,35 @@
         }
       }
     },
-    data () {
-      let _value, _min
+    data() {
+      let _value, _min, _max
       _value = Number(this.number) ? Number(this.number) : DEFAULT_VALUE
       _min = Number(this.min) ? Number(this.min) : DEFAULT_MIN_VALUE
+      _max = Number(this.max) ? Number(this.max) : null
 
       return {
         minValue: _min,
+        maxValue: _max,
         value: _value
       }
     },
+    computed: {
+      isMinusDisabled() {
+        return this.value === this.minValue
+      }
+    },
     methods: {
-      minus () {
+      minus() {
         if (this.value > this.minValue) {
           this.value--
         } else {
           this.value = this.minValue
         }
       },
-      plus () {
+      plus() {
+        if (this.maxValue > 0 && this.value > this.maxValue) {
+          return false;
+        }
         this.value++
       }
     }

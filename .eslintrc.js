@@ -21,6 +21,7 @@ module.exports = {
     'generator-star-spacing': 'off',
     'spaced-comment': 'off',
     'no-unused-vars': 'warn',
+    'no-trailing-spaces': 'off',
     'semi': 'off',
     'padded-blocks': 'off',
     'space-before-function-paren': 'off',

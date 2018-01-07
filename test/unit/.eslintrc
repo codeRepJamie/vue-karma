@@ -6,5 +6,8 @@
     "describe": true,
     "expect": true,
     "it": true
+  },
+  "rules": {
+    "no-undef": 0
   }
 }
