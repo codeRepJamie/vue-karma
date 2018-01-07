@@ -9,31 +9,41 @@
 <script>
   const DEFAULT_VALUE = 0,
     DEFAULT_MIN_VALUE = 0
-  ;
 
   export default {
     name: 'test',
     props: ['number', 'min'],
-    data() {
-      let _value, _min;
+    watch: {
+      value (value, old_value) {
+
+        value = Number(value)
+        if (value <= this.minValue) {
+          this.value = this.minValue
+        } else {
+          this.value = value
+        }
+      }
+    },
+    data () {
+      let _value, _min
       _value = Number(this.number) ? Number(this.number) : DEFAULT_VALUE
-      _min = Number(this.min) ? Number(this.min) : DEFAULT_MIN_VALUE;
-      console.log(_min);
+      _min = Number(this.min) ? Number(this.min) : DEFAULT_MIN_VALUE
+
       return {
-        _min: _min,
+        minValue: _min,
         value: _value
       }
     },
     methods: {
-      minus() {
-        if (this.value > this._min) {
-          --this.value;
+      minus () {
+        if (this.value > this.minValue) {
+          this.value--
         } else {
-          this.value = this._min;
+          this.value = this.minValue
         }
       },
-      plus() {
-        ++this.value;
+      plus () {
+        this.value++
       }
     }
   }

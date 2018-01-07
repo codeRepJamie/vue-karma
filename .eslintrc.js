@@ -25,6 +25,7 @@ module.exports = {
     'padded-blocks': 'off',
     'space-before-function-paren': 'off',
     'camelcase':'off',
+    'one-var':'off',
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-multiple-empty-lines': process.env.NODE_ENV === 'production' ? 'error' : 'off'
