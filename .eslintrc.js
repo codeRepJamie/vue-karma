@@ -25,6 +25,7 @@ module.exports = {
     'semi': 'off',
     'padded-blocks': 'off',
     'space-before-function-paren': 'off',
+    'quotes': 'off',
     'camelcase':'off',
     'one-var':'off',
     // allow debugger during development

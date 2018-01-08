@@ -67,9 +67,10 @@ describe('test.vue组件加载加载后，', () => {
       expect(testingComponent.minValue).toEqual(minNumber)
     })
 
-    it('[test_2]组件minus按钮无限点击不能够超过最小值', () => {
-      let min_value
+    it('[test_2]组件minus按钮无限点击不能够超过最小值', (done) => {
+      let min_value;
 
+      //jasmine.clock().install();
       testingComponent = createVue({
         template: `<div><test min="${minNumber}" number="${inputNumber}"/></div>`
       });
@@ -77,12 +78,16 @@ describe('test.vue组件加载加载后，', () => {
 
       do {
         testingComponent.$refs.minus.click()
-      } while (testingComponent.value > min_value)
+      } while (testingComponent.value > min_value);
 
-      testingComponent.$nextTick(function () {
-        expect(this.value).toEqual(min_value)
-        expect(this.$refs.minus.disabled).toBe(true)
-      })
+      setTimeout(function () {
+        console.log(testingComponent.$refs.minus.disabled);
+        expect(testingComponent.value).toEqual(min_value)
+        expect(testingComponent.$refs.minus.disabled).toBe(true);
+      }, 1000)
+
+      //jasmine.clock().tick(1000);
+      //jasmine.clock().uninstall();
     })
 
     it('[test_3]输入框不能够超过最小值,如果小于它则value值等于最小值', () => {
@@ -130,13 +135,29 @@ describe('test.vue组件加载加载后，', () => {
 
       do {
         testingComponent.$refs.plus.click()
-        console.log(testingComponent.value, testingComponent.maxValue);
       } while (testingComponent.value < maxNumber)
 
       testingComponent.$nextTick(function () {
         expect(this.value).toEqual(maxNumber)
         expect(this.$refs.plus.disabled).toBe(true)
       })
+    })
+
+    it('[test_3]输入框不能够超过最大值,如果大于它则value值等于最大值', () => {
+      let set_max = 220
+
+      testingComponent = createVue({
+        template: `<div><test max="${maxNumber}" number="${inputNumber}"/></div>`
+      });
+
+      testingComponent.$refs.inputNumber.value = set_max
+      testingComponent.$refs.inputNumber.dispatchEvent(new Event('input'))
+      console.log(testingComponent.value, testingComponent.maxValue);
+
+      expect(testingComponent.maxValue).toBeLessThan(set_max)
+      expect(testingComponent.maxValue).toEqual(testingComponent.value)
+      expect(testingComponent.$refs.plus.disabled).toBe(true)
+
     })
 
   })
