@@ -14,17 +14,19 @@
     name: 'test',
     props: ['number', 'min', 'max'],
     watch: {
-      value(value, old_value) {
+      value (value, old_value) {
 
         value = Number(value)
         if (value <= this.minValue) {
           this.value = this.minValue
+        } else if (value >= this.maxValue) {
+          this.value = this.maxValue
         } else {
           this.value = value
         }
       }
     },
-    data() {
+    data () {
       let _value, _min, _max
       _value = Number(this.number) ? Number(this.number) : DEFAULT_VALUE
       _min = Number(this.min) ? Number(this.min) : DEFAULT_MIN_VALUE
@@ -37,25 +39,18 @@
       }
     },
     computed: {
-      isMinusDisabled() {
+      isMinusDisabled () {
         return this.value === this.minValue
       },
-      isPlusDisabled() {
+      isPlusDisabled () {
         return this.value === this.maxValue
       }
     },
     methods: {
-      minus() {
-        if (this.value > this.minValue) {
-          this.value--
-        } else {
-          this.value = this.minValue
-        }
+      minus () {
+        this.value--
       },
-      plus() {
-        if (this.maxValue > 0 && this.value === this.maxValue) {
-          return false;
-        }
+      plus () {
         this.value++
       }
     }

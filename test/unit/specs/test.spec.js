@@ -11,7 +11,7 @@ describe('test.vue组件加载加载后，', () => {
     return (new Vue(Object.assign(baseVueConfig, vueConfig))).$mount().$children[0]
   }
 
-  xdescribe('测试基本功能', () => {
+  describe('测试基本功能', () => {
     let testingComponent,
       inputNumber = 20
     beforeEach(function () {
@@ -20,12 +20,11 @@ describe('test.vue组件加载加载后，', () => {
       })
     })
 
-    afterEach(function () {
+    it('[test_1_1]组件属性value的值应该与组件中的value值一致', () => {
       testingComponent.$refs.inputNumber.value = inputNumber
       testingComponent.$refs.inputNumber.dispatchEvent(new Event('input'))
-    })
-    it('[test_1_1]组件属性value的值应该与组件中的value值一致', () => {
       expect(testingComponent.value).toEqual(inputNumber)
+      expect(testingComponent.value.toString()).toEqual(testingComponent.$refs.inputNumber.value)
     })
 
     it('[test_2]组件minus/plus按钮点击后,value会相应+1/-1', () => {
@@ -38,7 +37,7 @@ describe('test.vue组件加载加载后，', () => {
     })
   })
 
-  xdescribe('测试最小值功能', () => {
+  describe('测试最小值功能', () => {
 
     let testingComponent,
       inputNumber = 20,
@@ -121,29 +120,32 @@ describe('test.vue组件加载加载后，', () => {
       inputNumber = 20
     })
 
-    it('[test_1]组件属性最大值应该与组件中的maxValue值一致', () => {
+    beforeEach(() => {
+      document.body.innerHTML = '<div id="example"></div>'
       testingComponent = createVue({
+        el: '#example',
         template: `<div><test max="${maxNumber}" number="${inputNumber}"/></div>`
       })
+    })
+
+    it('[test_1]组件属性最大值应该与组件中的maxValue值一致', () => {
       expect(testingComponent.maxValue).toEqual(maxNumber)
     })
 
-    it('[test_2]组件plus按钮无限点击不能够超过最大值', () => {
-      testingComponent = createVue({
-        template: `<div><test max="${maxNumber}" number="${inputNumber}"/></div>`
-      })
-
+    it('[test_2]组件plus按钮无限点击不能够超过最大值', done => {
       do {
         testingComponent.$refs.plus.click()
       } while (testingComponent.value < maxNumber)
 
-      testingComponent.$nextTick(function () {
-        expect(this.value).toEqual(maxNumber)
-        expect(this.$refs.plus.disabled).toBe(true)
+      testingComponent.$nextTick(() => {
+        expect(testingComponent.value).toEqual(maxNumber)
+        expect(testingComponent.$refs.plus.disabled).toBe(true)
+        done()
       })
+
     })
 
-    it('[test_3]输入框不能够超过最大值,如果大于它则value值等于最大值', () => {
+    it('[test_3]输入框不能够超过最大值,如果大于它则value值等于最大值', done => {
       let set_max = 220
 
       testingComponent = createVue({
@@ -153,12 +155,11 @@ describe('test.vue组件加载加载后，', () => {
       testingComponent.$refs.inputNumber.value = set_max
       testingComponent.$refs.inputNumber.dispatchEvent(new Event('input'))
 
-
-      testingComponent.$nextTick(function () {
-        console.log(this.value)
-        expect(this.maxValue).toBeLessThan(set_max)
-        expect(this.maxValue).toEqual(this.value)
-        expect(this.$refs.plus.disabled).toBe(true)
+      testingComponent.$nextTick(() => {
+        expect(testingComponent.maxValue).toBeLessThan(set_max)
+        expect(testingComponent.maxValue).toEqual(testingComponent.value)
+        expect(testingComponent.$refs.plus.disabled).toBe(true)
+        done()
       })
 
     })
